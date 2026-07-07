@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWM Simulation — Remote</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h1><span class="bolt">⚡</span> PWM Remote</h1>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <span class="role-badge monitor"><span class="conn-dot" id="connDot"></span>PHONE (CONTROL)</span>
+    <span class="role-badge" id="displayStatus">DISPLAY: OFFLINE</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="monitor-hero">
+    <div class="big-duty" id="bigDuty">50%</div>
+    <div class="sub">duty cycle · dragging below updates the display device instantly</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="label">Frequency</div><div class="value accent" id="statFreq">10000 Hz</div></div>
+    <div class="stat-card"><div class="label">Period</div><div class="value warn" id="statPeriod">0.1 ms</div></div>
+    <div class="stat-card"><div class="label">ON time</div><div class="value" id="statOn">0.05 ms</div></div>
+    <div class="stat-card"><div class="label">Power consumed</div><div class="value" id="statConsumed">33 mW</div></div>
+    <div class="stat-card"><div class="label">Power saved</div><div class="value good" id="statSaved">33 mW</div></div>
+    <div class="stat-card"><div class="label">Last update</div><div class="value" id="statTime">--:--:--</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:18px;">
+    <h2>Controls (this device drives the display)</h2>
+
+    <div class="control-block">
+      <div class="row-between"><span>Duty cycle</span><span class="val" id="dutyLabel">50%</span></div>
+      <input type="range" id="dutySlider" min="0" max="100" value="50">
+      <div class="scale-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+      <div class="preset-grid">
+        <button class="preset-btn" data-duty="100">100%</button>
+        <button class="preset-btn" data-duty="70">70%</button>
+        <button class="preset-btn active" data-duty="50">50%</button>
+        <button class="preset-btn" data-duty="20">20%</button>
+      </div>
+    </div>
+
+    <div class="control-block">
+      <div class="row-between"><span>Frequency</span><span class="val" id="freqLabel">10000 Hz</span></div>
+      <input type="range" id="freqSlider" min="1" max="10000" value="10000">
+      <div class="scale-labels"><span>1 Hz</span><span>5000 Hz</span><span>10000 Hz</span></div>
+      <div class="preset-grid">
+        <button class="preset-btn" data-freq="1">1 Hz</button>
+        <button class="preset-btn" data-freq="50">50 Hz</button>
+        <button class="preset-btn" data-freq="500">500 Hz</button>
+        <button class="preset-btn" data-freq="1000">1 kHz</button>
+        <button class="preset-btn" data-freq="5000">5 kHz</button>
+        <button class="preset-btn active" data-freq="10000">10 kHz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:18px;">
+    <div class="waveform-header">
+      <span class="title">PWM Signal Waveform — live</span>
+      <span class="readout"><b id="waveFreq">10000</b> Hz</span>
+    </div>
+    <div id="waveHolder"></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:18px;">
+    <h2>Duty cycle history</h2>
+    <div id="dutyChartHolder"></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:18px;">
+    <h2>Power draw history</h2>
+    <div id="powerChartHolder"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Component power readings</h2>
+    <div id="componentList"></div>
+  </div>
+
+  <div class="footer-note">device role: phone / remote controller · sends CONTROL, receives STATE_UPDATE</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/static/js/monitor.js"></script>
+</body>
+</html>

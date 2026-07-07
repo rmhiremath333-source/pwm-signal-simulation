@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWM Simulation — Controller</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h1><span class="bolt">⚡</span> PWM Signal Simulation</h1>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <span class="role-badge controller"><span class="conn-dot" id="connDot"></span>DISPLAY</span>
+    <span class="role-badge" id="monitorStatus">PHONE: OFFLINE</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="label">Duty cycle</div><div class="value accent" id="statDuty">50%</div></div>
+    <div class="stat-card"><div class="label">Frequency</div><div class="value accent" id="statFreq">10000 Hz</div></div>
+    <div class="stat-card"><div class="label">Period</div><div class="value warn" id="statPeriod">0.1 ms</div></div>
+    <div class="stat-card"><div class="label">ON time</div><div class="value" id="statOn">0.05 ms</div></div>
+    <div class="stat-card"><div class="label">Power consumed</div><div class="value" id="statConsumed">33 mW</div></div>
+    <div class="stat-card"><div class="label">Power saved</div><div class="value good" id="statSaved">33 mW</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div style="display:flex; flex-direction:column; gap:18px;">
+
+      <div class="panel">
+        <h2>Tube light simulation</h2>
+        <div id="tubeLightHolder"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Fan simulation</h2>
+        <div id="fanHolder"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Component power readings</h2>
+        <div id="componentList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Pair your phone (remote control)</h2>
+        <div class="qr-box">
+          <img src="/qr" alt="Scan to open remote control">
+          <div class="url" id="monitorUrl">loading…</div>
+          <div class="hint">Scan with your phone to control this display (same WiFi network)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:18px;">
+      <div class="panel">
+        <div class="waveform-header">
+          <span class="title">PWM Signal Waveform — 3 cycles shown</span>
+          <span class="readout"><b id="waveFreq">10000</b> Hz | Period: <b id="wavePeriod">0.1</b> ms | ON: <b id="waveOn">0.05</b> ms &nbsp;OFF: <b id="waveOff">0.05</b> ms</span>
+        </div>
+        <div id="waveHolder"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Duty cycle history</h2>
+        <div id="dutyChartHolder"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Power draw history</h2>
+        <div id="powerChartHolder"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Change log (synced across devices)</h2>
+        <table class="log-table" id="logTable">
+          <thead><tr><th>Time</th><th>Duty</th><th>Freq</th><th>Consumed</th><th>Source</th></tr></thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">device role: controller · protocol: ws · state authority: flask backend</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/static/js/controller.js"></script>
+</body>
+</html>
