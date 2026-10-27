@@ -2,3 +2,4 @@ flask
 flask-socketio
 qrcode
 pillow
+gunicorn
